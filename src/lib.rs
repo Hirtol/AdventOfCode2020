@@ -12,5 +12,5 @@ pub struct BasicOptions {
 
 pub fn read_puzzle_file(file_path: impl AsRef<Path>) -> anyhow::Result<Vec<String>> {
     let puzzle_file = BufReader::new(File::open(file_path)?);
-    Ok(puzzle_file.lines().filter_map(Result::ok).collect())
+    Ok(puzzle_file.lines().flatten().collect())
 }

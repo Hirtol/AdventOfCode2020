@@ -9,7 +9,7 @@ fn main() -> anyhow::Result<()> {
     let path = PathBuf::from(opts.path_to_puzzles).join("day_1.txt");
     let puzzle = read_puzzle_file(path)?
         .into_iter()
-        .map(|s| s.parse().unwrap())
+        .flat_map(|s| s.parse())
         .collect::<Vec<u64>>();
 
     let first_result = find_two_numbers_for_2020(&puzzle).unwrap();
