@@ -12,7 +12,7 @@ fn main() -> anyhow::Result<()> {
         .flat_map(|s| s.parse())
         .collect::<Vec<u64>>();
 
-    let first_result = find_two_numbers_for_2020(&puzzle).unwrap();
+    let first_result = find_two_numbers_for_2020(&puzzle, 2020).unwrap();
     let second_result = find_three_numbers_for_2020(&puzzle).unwrap();
 
     println!(
@@ -32,9 +32,9 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn find_two_numbers_for_2020(puzzle: &[u64]) -> Option<(u64, u64)> {
-    for current_int in puzzle.iter() {
-        let temp_result = puzzle.iter().find(|to_add| **to_add + *current_int == 2020).cloned();
+fn find_two_numbers_for_2020(puzzle: &[u64], expected: u64) -> Option<(u64, u64)> {
+    for current_int in puzzle {
+        let temp_result = puzzle.iter().cloned().find(|to_add| to_add + current_int == expected);
         if let Some(to_add) = temp_result {
             return Some((*current_int, to_add));
         }
@@ -43,15 +43,9 @@ fn find_two_numbers_for_2020(puzzle: &[u64]) -> Option<(u64, u64)> {
 }
 
 fn find_three_numbers_for_2020(puzzle: &[u64]) -> Option<(u64, u64, u64)> {
-    for current_int in puzzle.iter() {
-        for second_int in puzzle.iter() {
-            let temp_result = puzzle
-                .iter()
-                .find(|to_add| **to_add + *current_int + *second_int == 2020)
-                .cloned();
-            if let Some(to_add) = temp_result {
-                return Some((*current_int, *second_int, to_add));
-            }
+    for first_int in puzzle {
+        if let Some((second, third)) = find_two_numbers_for_2020(puzzle, 2020 - first_int) {
+            return Some((*first_int, second, third));
         }
     }
     None
