@@ -1,8 +1,8 @@
 use advent_of_code_2020::{read_puzzle_file, BasicOptions};
 use clap::Clap;
-use std::fs::File;
+
 use std::option::Option::Some;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 fn main() -> anyhow::Result<()> {
     let opts: BasicOptions = BasicOptions::parse();
