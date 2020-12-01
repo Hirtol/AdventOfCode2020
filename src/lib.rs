@@ -1,7 +1,7 @@
-use std::fs::File;
 use clap::Clap;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
 use std::path::Path;
-use std::io::{BufReader, BufRead};
 
 #[derive(Clone, Debug, Default, Clap)]
 #[clap(version = "1.0")]
