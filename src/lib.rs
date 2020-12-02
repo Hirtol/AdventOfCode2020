@@ -3,6 +3,10 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::Path;
 
+pub trait AdventOfCode {
+    fn solution();
+}
+
 #[derive(Clone, Debug, Default, Clap)]
 #[clap(version = "1.0")]
 pub struct BasicOptions {

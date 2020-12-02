@@ -33,10 +33,10 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn find_two_numbers_for_2020(puzzle: &[u64], expected: u64) -> Option<(u64, u64)> {
-    for current_int in puzzle {
-        let temp_result = puzzle.iter().cloned().find(|to_add| to_add + current_int == expected);
-        if let Some(to_add) = temp_result {
-            return Some((*current_int, to_add));
+    for first_int in puzzle {
+        let temp_result = puzzle.iter().cloned().find(|to_add| to_add + first_int == expected);
+        if let Some(second) = temp_result {
+            return Some((*first_int, second));
         }
     }
     None
