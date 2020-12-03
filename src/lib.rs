@@ -2,18 +2,21 @@ use clap::Clap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::Path;
+use std::time::Instant;
 
 pub trait AdventOfCode {
     type PuzzleData;
 
     fn start(puzzle_path: impl AsRef<Path>) -> anyhow::Result<()> {
         let parsed_data = Self::parse_file(read_puzzle_file(puzzle_path)?);
-
-        println!("Starting part one!");
+        let current_time = Instant::now();
+        println!("Starting part one.");
         Self::part_one(&parsed_data);
-        println!("Starting part two!");
+        println!("Finished part one, took: {:?}!", current_time.elapsed());
+        let current_time = Instant::now();
+        println!("Starting part two.");
         Self::part_two(&parsed_data);
-        println!("Finished");
+        println!("Finished part two, took: {:?}!", current_time.elapsed());
         Ok(())
     }
 

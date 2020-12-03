@@ -10,7 +10,7 @@ use std::ops::RangeInclusive;
 
 struct Day3;
 
-fn find_slope_trees(puzzle: &Vec<String>, x_increment: usize, y_increment: usize) -> usize {
+fn find_slope_trees(puzzle: &[String], x_increment: usize, y_increment: usize) -> usize {
     let line_width = puzzle[0].len();
 
     puzzle.iter()
