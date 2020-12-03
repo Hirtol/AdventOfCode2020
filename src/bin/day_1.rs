@@ -1,4 +1,4 @@
-use advent_of_code_2020::{read_puzzle_file, BasicOptions, AdventOfCode};
+use advent_of_code_2020::{read_puzzle_file, AdventOfCode, BasicOptions};
 use clap::Clap;
 
 use std::option::Option::Some;
@@ -34,9 +34,7 @@ impl AdventOfCode for Day1 {
     }
 
     fn parse_file(puzzle: Vec<String>) -> Self::PuzzleData {
-        puzzle.into_iter()
-            .flat_map(|s| s.parse())
-            .collect::<Vec<u64>>()
+        puzzle.into_iter().flat_map(|s| s.parse()).collect::<Vec<u64>>()
     }
 }
 
@@ -44,7 +42,7 @@ fn find_two_numbers_for_2020(puzzle: &[u64], expected: u64) -> Option<(u64, u64)
     for first_int in puzzle {
         let expect = expected - first_int;
         if puzzle.contains(&expect) {
-            return Some((*first_int, expect))
+            return Some((*first_int, expect));
         }
     }
     None

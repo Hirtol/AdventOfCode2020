@@ -1,4 +1,4 @@
-use advent_of_code_2020::{read_puzzle_file, BasicOptions, AdventOfCode};
+use advent_of_code_2020::{read_puzzle_file, AdventOfCode, BasicOptions};
 use clap::Clap;
 
 use std::collections::HashMap;
@@ -44,7 +44,8 @@ impl AdventOfCode for Day2 {
     }
 
     fn parse_file(puzzle: Vec<String>) -> Self::PuzzleData {
-        puzzle.into_iter()
+        puzzle
+            .into_iter()
             .map(|s| {
                 let (policy, password) = s.split_at(s.find(':').unwrap() + 1);
                 let (range, letter) = policy.split_at(policy.find(' ').unwrap());
