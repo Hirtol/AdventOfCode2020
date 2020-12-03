@@ -16,8 +16,8 @@ impl AdventOfCode for Day2 {
     fn part_one(puzzle: &Self::PuzzleData) {
         let correct_passwords = puzzle
             .iter()
-            .map(|(k, v)| (k.chars().filter(|to_check| *to_check == v.1).count(), v))
-            .filter(|(k, v)| v.0.contains(k))
+            .map(|(pass, rc)| (pass.chars().filter(|to_check| *to_check == rc.1).count(), rc))
+            .filter(|(password, range_char)| range_char.0.contains(password))
             .count();
 
         println!("Correct passwords part one: {}", correct_passwords);
@@ -26,14 +26,14 @@ impl AdventOfCode for Day2 {
     fn part_two(puzzle: &Self::PuzzleData) {
         let correct_passwords = puzzle
             .iter()
-            .filter(|(password, v)| {
-                let bottom_index = v.0.start().clone() - 1;
-                let top_index = v.0.end().clone() - 1;
+            .filter(|(password, range_char)| {
+                let bottom_index = range_char.0.start() - 1;
+                let top_index = range_char.0.end() - 1;
 
                 let correct_amount = password
                     .char_indices()
                     .filter(|c| c.0 == bottom_index || c.0 == top_index)
-                    .filter(|c| c.1 == v.1)
+                    .filter(|c| c.1 == range_char.1)
                     .count();
 
                 correct_amount == 1
