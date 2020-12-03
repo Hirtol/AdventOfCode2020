@@ -11,21 +11,14 @@ use std::ops::RangeInclusive;
 struct Day3;
 
 fn find_slope_trees(puzzle: &Vec<String>, x_increment: usize, y_increment: usize) -> usize {
-    let (mut current_x, mut current_y) = (0, 0);
-    let height = puzzle.len();
     let line_width = puzzle[0].len();
-    let mut trees_seen = 0;
 
-    while current_y < height {
-        let position_char = puzzle[current_y].chars().nth(current_x % line_width).unwrap();
-        if position_char == '#' {
-            trees_seen += 1;
-        }
-        current_x += x_increment;
-        current_y += y_increment;
-    }
-
-    trees_seen
+    puzzle.iter()
+        .step_by(y_increment)
+        .enumerate()
+        .flat_map(|(line_y, line)| line.chars().nth((line_y * x_increment) % line_width))
+        .filter(|&c| c == '#')
+        .count()
 }
 
 impl AdventOfCode for Day3 {
@@ -37,11 +30,11 @@ impl AdventOfCode for Day3 {
     }
 
     fn part_two(puzzle: &Self::PuzzleData) {
-        let trees_seen = find_slope_trees(puzzle, 1, 1)
-            * find_slope_trees(puzzle, 3, 1)
-            * find_slope_trees(puzzle, 5, 1)
-            * find_slope_trees(puzzle, 7, 1)
-            * find_slope_trees(puzzle, 1, 2);
+        let slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)];
+
+        let trees_seen = slopes.iter().fold(1, |accumulator, &(slope_x, slope_y)| {
+            accumulator * find_slope_trees(puzzle, slope_x, slope_y)
+        });
         println!("Part Two, trees seen: {}", trees_seen);
     }
 
