@@ -23,7 +23,7 @@ fn validate_fields(map: &HashMap<String, String>) -> bool {
                 false
             }
         }
-        "hcl" => value.starts_with("#") && hex::decode(value.chars().skip(1).take(6).collect::<String>()).is_ok(),
+        "hcl" => value.starts_with("#") && value.chars().skip(1).take(6).all(|c| c.is_ascii_hexdigit()),
         "ecl" => {
             const EYE_COLOUR: [&str; 7] = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
             EYE_COLOUR.contains(&value.as_str())
