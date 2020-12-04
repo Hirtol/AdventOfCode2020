@@ -13,7 +13,8 @@ struct Day3;
 fn find_slope_trees(puzzle: &[String], x_increment: usize, y_increment: usize) -> usize {
     let line_width = puzzle[0].len();
 
-    puzzle.iter()
+    puzzle
+        .iter()
         .step_by(y_increment)
         .enumerate()
         .flat_map(|(line_y, line)| line.chars().nth((line_y * x_increment) % line_width))
