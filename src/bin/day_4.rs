@@ -1,12 +1,9 @@
 use std::collections::HashMap;
-use std::ops::RangeInclusive;
-use std::option::Option::Some;
 use std::path::PathBuf;
 
 use clap::Clap;
-use itertools::Itertools;
 
-use advent_of_code_2020::{read_puzzle_file, AdventOfCode, BasicOptions};
+use advent_of_code_2020::{AdventOfCode, BasicOptions};
 
 struct Day4;
 
@@ -41,7 +38,7 @@ fn count_valid(puzzle: &<Day4 as AdventOfCode>::PuzzleData, check_field_validity
     puzzle
         .iter()
         .filter(|map| {
-            (!check_field_validity | validate_fields(map)) && map.len() == if map.contains_key("cid") { 8 } else { 7 }
+            (!check_field_validity || validate_fields(map)) && map.len() == if map.contains_key("cid") { 8 } else { 7 }
         })
         .count()
 }

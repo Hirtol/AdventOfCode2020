@@ -1,8 +1,8 @@
-use advent_of_code_2020::{read_puzzle_file, AdventOfCode, BasicOptions};
+use advent_of_code_2020::{AdventOfCode, BasicOptions};
 use clap::Clap;
 
 use std::collections::HashMap;
-use std::option::Option::Some;
+
 use std::path::PathBuf;
 
 use itertools::Itertools;
