@@ -3,27 +3,29 @@ use clap::Clap;
 use itertools::Itertools;
 use std::path::PathBuf;
 
-type GroupAnswers = String;
+type GroupAnswers = Vec<String>;
 struct Day6;
 
 impl AdventOfCode for Day6 {
-    type PuzzleData = Vec<Vec<GroupAnswers>>;
+    type PuzzleData = Vec<GroupAnswers>;
 
     fn part_one(puzzle: &Self::PuzzleData) {
-        let total = puzzle.iter()
-            .map(|lines| lines.join(""))
+        let total = puzzle
+            .iter()
+            .map(|group| group.join(""))
             .map(|answers| answers.chars().unique().count())
             .sum::<usize>();
         println!("Sum of unique answers: {}", total);
     }
 
     fn part_two(puzzle: &Self::PuzzleData) {
-        let total = puzzle.iter()
-            .map(|lines| {
-                let mut iter = lines.iter();
-                let first = iter.next().unwrap().clone();
-                lines.iter().fold(first, |acc, answer| {
-                    acc.chars().filter(|&c| answer.contains(c)).collect::<GroupAnswers>()
+        let total = puzzle
+            .iter()
+            .map(|group| {
+                let mut answer = group.iter(); // fold_first is still unstable :(
+                let first = answer.next().unwrap().clone();
+                answer.fold(first, |acc, answer| {
+                    acc.chars().filter(|&c| answer.contains(c)).collect()
                 })
             })
             .map(|answers| answers.len())
@@ -32,11 +34,8 @@ impl AdventOfCode for Day6 {
     }
 
     fn parse_file(puzzle: Vec<String>) -> Self::PuzzleData {
-        let chunks = puzzle.split(|line| line.is_empty());
-        chunks
-            .into_iter()
-            .map(|lines| lines.to_vec())
-            .collect()
+        let chunks = puzzle.split(String::is_empty);
+        chunks.into_iter().map(|lines| lines.to_vec()).collect()
     }
 }
 
